@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from api.serializers import *
+from users.permissions import *
 
 
 class CustomModelView(ModelViewSet):
@@ -83,6 +84,7 @@ class CustomModelView(ModelViewSet):
 
 
 class ProjectModelViewSet(CustomModelView):
+    permission_classes = [VipPermission,]
     queryset = Project.objects.order_by('-ctime')
     serializer_class = ProjectSerializer
 

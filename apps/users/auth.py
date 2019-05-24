@@ -19,7 +19,7 @@ class TokenAuthentication(BaseAuthentication):
                 now_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 delta = datetime.datetime.strptime(now_time, '%Y-%m-%d %H:%M:%S') - datetime.datetime.strptime(
                     update_time, '%Y-%m-%d %H:%M:%S')
-                import web_auto.settings as setting
+                import web_backed.settings as setting
                 if delta.seconds > setting.TOKEN_EFFETIVE_TIME:
                     raise exceptions.AuthenticationFailed('token失效')
                 else:

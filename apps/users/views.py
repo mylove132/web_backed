@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
-from django.db.models import QuerySet
 from django.http import JsonResponse
 from rest_framework.views import APIView
 import hashlib
 from users.serializers import *
 from api.views import CustomModelView
-
-QuerySet
 
 
 def md5(name, salt='okay'):

@@ -102,6 +102,9 @@ DATABASES = {
     }
 }
 
+# token的有效时长
+TOKEN_EFFETIVE_TIME = 60*60
+
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
