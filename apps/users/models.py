@@ -7,6 +7,7 @@ class User(models.Model):
         (2, 'vip用户'),
         (3, '管理员用户')
     )
+    name = models.CharField(max_length=20,verbose_name='用户名',blank=True,unique=True)
     email = models.EmailField(max_length=50, verbose_name='邮箱', blank=False, unique=True)
     password = models.CharField(max_length=100, verbose_name='用户密码')
     user_type = models.IntegerField(choices=USER_TYPE, default=1, verbose_name='用户类型')

@@ -9,6 +9,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     # type = serializers.ChoiceField(choices=Project.TYPE, source='get_type_display')
     ctime = serializers.DateTimeField(required=False, format='%Y-%m-%d %H:%M:%S')
     update_time = serializers.DateTimeField(required=False, default=timezone.now, format='%Y-%m-%d %H:%M:%S')
+    username = serializers.ReadOnlyField(source='user.name')
 
     class Meta:
         model = Project
@@ -20,7 +21,8 @@ class ScriptSerializer(serializers.ModelSerializer):
     # protocol = serializers.ChoiceField(choices=Script.REQUEST_TYPE, source='get_protocol_display')
     create_time = serializers.DateTimeField(required=False,format='%Y-%m-%d %H:%M:%S')
     update_time = serializers.DateTimeField(required=False, default=timezone.now, format='%Y-%m-%d %H:%M:%S')
-
+    username = serializers.ReadOnlyField(source='user.name')
+    projectname = serializers.ReadOnlyField(source='project.name')
     class Meta:
         model = Script
         fields = '__all__'

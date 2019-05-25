@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+   # 'channels',
     'rest_framework',
+    'django_filters',
     'users',
     'api',
     'business'
@@ -80,11 +82,7 @@ WSGI_APPLICATION = 'web_backed.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': ['users.auth.TokenAuthentication', ],
-    'DEFAULT_PERMISSION_CLASSES': [
-    ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10
+    'DEFAULT_AUTHENTICATION_CLASSES': ['users.auth.TokenAuthentication', ]
 }
 # SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 

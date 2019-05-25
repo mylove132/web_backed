@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from api.serializers import *
 from users.permissions import *
+import django_filters
+from rest_framework import filters
 
 
 class CustomModelView(ModelViewSet):
@@ -37,7 +41,6 @@ class CustomModelView(ModelViewSet):
             if page is not None:
                 serializer = self.get_serializer(page, many=True)
                 return self.get_paginated_response(serializer.data)
-
             serializer = self.get_serializer(queryset, many=True)
             return Response({'code': 0, 'msg': 'OK', 'data': serializer.data})
         except Exception as e:
@@ -50,6 +53,7 @@ class CustomModelView(ModelViewSet):
         try:
             instance = self.get_object()
             serializer = self.get_serializer(instance)
+
             return Response({'code': 0, 'msg': 'OK', 'data': serializer.data})
         except Exception as e:
             self.response['code'] = -1
@@ -83,13 +87,28 @@ class CustomModelView(ModelViewSet):
             return Response(self.response)
 
 
+class ProjectFilter(django_filters.FilterSet):
+    class Meta:
+        model = Project
+        fields = ['env', 'type', 'user', ]
+
+
 class ProjectModelViewSet(CustomModelView):
-    permission_classes = [VipPermission,]
-    queryset = Project.objects.order_by('-ctime')
+    # permission_classes = [VipPermission,]
+    filter_backends = (DjangoFilterBackend,filters.SearchFilter,)
+    filter_class = ProjectFilter
+    search_fields = ('name',)
+    queryset = Project.objects.order_by('-update_time')
     serializer_class = ProjectSerializer
 
+class ScriptFilter(django_filters.FilterSet):
+    class Meta:
+        model = Script
+        fields = ['project','user','protocol', ]
 
 class ScriptModelViewSet(CustomModelView):
-    queryset = Script.objects.order_by('-create_time')
+    queryset = Script.objects.order_by('-update_time')
     serializer_class = ScriptSerializer
-
+    filter_backends = (DjangoFilterBackend,filters.SearchFilter,)
+    filter_class = ScriptFilter
+    search_fields = ('name',)

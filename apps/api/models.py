@@ -34,16 +34,16 @@ class Script(models.Model):
         (3, "DELETE")
     )
     PROCOTOL = (
-        (1, "GET"),
-        (2, "POST"),
-        (3, "DELETE")
+        (1, "http"),
+        (2, "dubbo"),
+        (3, "socket")
     )
     name = models.CharField(max_length=30, verbose_name='脚本名称')
     pre_number = models.IntegerField(verbose_name='并发数')
     pre_time = models.IntegerField(verbose_name='压测时长')
-    url = models.CharField(max_length=200, verbose_name='压测url')
+    url = models.CharField(max_length=200,blank=True, verbose_name='压测url')
     time_out = models.IntegerField(default=5000, blank=True, verbose_name='超时时间')
-    request_type = models.IntegerField(choices=REQUEST_TYPE,default=1, verbose_name='接口请求类型')
+    request_type = models.IntegerField(choices=REQUEST_TYPE,blank=True, verbose_name='接口请求类型')
     protocol = models.IntegerField(choices=PROCOTOL,default=1, verbose_name='接口协议')
     ins = models.CharField(max_length=100, blank=True, verbose_name='dubbo接口名称')
     assert_text = models.CharField(max_length=50, blank=True, verbose_name='响应断言文本')
@@ -54,6 +54,7 @@ class Script(models.Model):
     header = models.CharField(max_length=300, blank=True, verbose_name='header')
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     update_time = models.DateTimeField(auto_now_add=True, verbose_name='更新时间')
+    version = models.CharField(max_length=10, blank=True, verbose_name='接口版本')
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

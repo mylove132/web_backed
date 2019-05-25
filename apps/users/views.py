@@ -38,7 +38,8 @@ class UserLoginApiView(APIView):
                 response['msg'] = 'OK'
                 response['data'] = {
                     "token": token,
-                    'email': user.email
+                    'id':user.id,
+                    'name': user.name
                 }
 
                 return JsonResponse(response)
@@ -54,5 +55,6 @@ class UserLoginApiView(APIView):
 
 
 class UserModelViewSet(CustomModelView):
-    queryset = User.objects.order_by('-create_time')
+    authentication_classes = []
+    queryset = User.objects.order_by('id')
     serializer_class = UserSerializer
