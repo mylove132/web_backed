@@ -12,4 +12,5 @@ router.register(r'script', views.ScriptModelViewSet, base_name='script')
 urlpatterns = [
     url(r'^project/$',views.ProjectModelViewSet.as_view({'get':'list','post':'create'})),
     url('^', include(router.urls)),
+    url('^exec/script/$',views.RunScript.as_view()),
 ]

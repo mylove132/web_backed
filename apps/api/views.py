@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from rest_framework.views import APIView
 from users.permissions import *
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
@@ -93,7 +94,7 @@ class ProjectFilter(django_filters.FilterSet):
 
 class ProjectModelViewSet(CustomModelView):
     # permission_classes = [VipPermission,]
-    permission_classes = [VipPermission,]
+    permission_classes = [VipPermission, ]
     filter_backends = (DjangoFilterBackend, filters.SearchFilter,)
     filter_class = ProjectFilter
     search_fields = ('name',)
@@ -108,8 +109,39 @@ class ScriptFilter(django_filters.FilterSet):
 
 
 class ScriptModelViewSet(CustomModelView):
+    permission_classes = [VipPermission, ]
     queryset = Script.objects.order_by('-update_time')
     serializer_class = ScriptSerializer
     filter_backends = (DjangoFilterBackend, filters.SearchFilter,)
     filter_class = ScriptFilter
     search_fields = ('name',)
+
+
+class RunScript(APIView):
+    # permission_classes = [VipPermission, ]
+    response = {}
+
+    def post(self, request):
+        file_path = 'E:\\workspace\\jmeter\\jmx\\jie.jmx'
+        jmeter_path = 'E:\\jemter\\apache-jmeter-3.3\\bin\\jmeter.bat'
+        jtl_path = 'E:\\workspace\\jmeter\\jtl\\test01.jtl'
+        log_path = 'E:\\workspace\\jmeter\\log\\test01.log'
+        from api.redis_cli import exec_file_redis
+        if exec_file_redis.exists('exec_jmx_index'):
+            if int(exec_file_redis.get('exec_jmx_index')) >= 2:
+                self.response['code'] = 5001
+                self.response['msg'] = '目前执行数已达最多，请稍后再试'
+                self.response['data'] = ''
+                return Response(self.response)
+            else:
+                exec_file_redis.set('exec_jmx_index', str(int(exec_file_redis.get('exec_jmx_index')) + 1))
+        else:
+            exec_file_redis.set('exec_jmx_index', '1')
+        import os
+        cmd = '{} -n -t {} -l {} -j {}'.format(jmeter_path, file_path, jtl_path, log_path)
+        with os.popen(cmd,'r') as p:
+            res = p.read()
+            for line in res.splitlines():
+                print(line)
+
+        return Response()
