@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+from users.permissions import *
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from api.serializers import *
-from users.permissions import *
 import django_filters
 from rest_framework import filters
 
@@ -95,20 +93,23 @@ class ProjectFilter(django_filters.FilterSet):
 
 class ProjectModelViewSet(CustomModelView):
     # permission_classes = [VipPermission,]
-    filter_backends = (DjangoFilterBackend,filters.SearchFilter,)
+    permission_classes = [VipPermission,]
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter,)
     filter_class = ProjectFilter
     search_fields = ('name',)
     queryset = Project.objects.order_by('-update_time')
     serializer_class = ProjectSerializer
 
+
 class ScriptFilter(django_filters.FilterSet):
     class Meta:
         model = Script
-        fields = ['project','user','protocol', ]
+        fields = ['project', 'user', 'protocol', ]
+
 
 class ScriptModelViewSet(CustomModelView):
     queryset = Script.objects.order_by('-update_time')
     serializer_class = ScriptSerializer
-    filter_backends = (DjangoFilterBackend,filters.SearchFilter,)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter,)
     filter_class = ScriptFilter
     search_fields = ('name',)
