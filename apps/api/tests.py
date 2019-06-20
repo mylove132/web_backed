@@ -1,3 +1,2 @@
-from django.test import TestCase
-
-# Create your tests here.
+import os
+os.mknod('/Users/liuzhanhui/Documents/jmeter/project/java/findStudentFutureReomoteCourse1560333545.properties')

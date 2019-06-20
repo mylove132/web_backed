@@ -1,7 +1,6 @@
 # coding=utf-8
 from rest_framework import permissions
 
-
 class CommonPermission(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.user.user_type == 1:
@@ -16,7 +15,6 @@ class VipPermission(permissions.BasePermission):
         else:
             if request.user.user_type >= 2:
                 return True
-
         return False
 
 

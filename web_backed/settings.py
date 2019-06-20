@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import djcelery
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 APP_PATH = os.path.join(BASE_DIR, 'apps')
@@ -32,6 +34,18 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+
+import djcelery
+djcelery.setup_loader()
+
+BROKER_URL = 'redis://127.0.0.1:6379/3'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/3'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+CELERY_TIMEZONE = 'Asia/Shanghai'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,7 +55,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-   # 'channels',
+    'corsheaders',
+    'channels',
+    'djcelery',
     'rest_framework',
     'django_filters',
     'users',
@@ -52,12 +68,15 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'web_backed.urls'
 
@@ -82,7 +101,8 @@ WSGI_APPLICATION = 'web_backed.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': ['users.auth.TokenAuthentication', ]
+    'DEFAULT_AUTHENTICATION_CLASSES': ['users.auth.TokenAuthentication', ],
+    'DEFAULT_PERMISSION_CLASSES': ['users.permissions.VipPermission'],
 }
 # SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
@@ -99,6 +119,21 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+# channels配置（长链接）
+ASGI_APPLICATION = 'web_backed.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+
+djcelery.setup_loader()
+
+
+
 
 # token的有效时长
 TOKEN_EFFETIVE_TIME = 60*60

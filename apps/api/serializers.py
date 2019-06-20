@@ -26,3 +26,14 @@ class ScriptSerializer(serializers.ModelSerializer):
     class Meta:
         model = Script
         fields = '__all__'
+
+class HistorySerializer(serializers.ModelSerializer):
+    create_time = serializers.DateTimeField(required=False, format='%Y-%m-%d %H:%M:%S')
+    md5 = serializers.CharField(read_only=True)
+    script_name = serializers.ReadOnlyField(source='script.name')
+    username = serializers.ReadOnlyField(source='user.name')
+    project_name = serializers.ReadOnlyField(source='script.project.name')
+
+    class Meta:
+        model = History
+        fields = '__all__'

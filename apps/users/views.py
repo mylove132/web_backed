@@ -16,13 +16,12 @@ def md5(name, salt='okay'):
 # 用于登录
 class UserLoginApiView(APIView):
     authentication_classes = []
-
+    permission_classes = []
     def post(self, request, format=None):
         response = {}
         data = request.data
         email = data.get('email')
         password = data.get('password')
-        print(request.data)
         if email:
             user = User.objects.filter(email=email).first()
             if not user:

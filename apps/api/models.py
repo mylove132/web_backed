@@ -23,6 +23,7 @@ class Project(models.Model):
     update_time = models.DateTimeField(auto_now_add=True, verbose_name='项目更新时间')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+
     class Meta:
         db_table = 'entity_project'
 
@@ -43,21 +44,35 @@ class Script(models.Model):
     pre_time = models.IntegerField(verbose_name='压测时长')
     url = models.CharField(max_length=200,blank=True, verbose_name='压测url')
     time_out = models.IntegerField(default=5000, blank=True, verbose_name='超时时间')
-    request_type = models.IntegerField(choices=REQUEST_TYPE,blank=True, verbose_name='接口请求类型')
+    request_type = models.IntegerField(choices=REQUEST_TYPE,default=1, verbose_name='接口请求类型')
     protocol = models.IntegerField(choices=PROCOTOL,default=1, verbose_name='接口协议')
     ins = models.CharField(max_length=100, blank=True, verbose_name='dubbo接口名称')
     assert_text = models.CharField(max_length=50, blank=True, verbose_name='响应断言文本')
-    method = models.CharField(max_length=30, blank=True, verbose_name='dubbo接口方法名')
-    params = models.CharField(blank=True, max_length=200, verbose_name='压测接口参数值')
+    method = models.CharField(max_length=80, blank=True, verbose_name='dubbo接口方法名')
+    params = models.CharField(blank=True, max_length=600, verbose_name='压测接口参数值')
     param_type = models.CharField(blank=True, max_length=100, verbose_name='dubbo接口请求参数类型')
-    cookie = models.CharField(max_length=300, blank=True, verbose_name='cookie')
-    header = models.CharField(max_length=300, blank=True, verbose_name='header')
+    cookie = models.TextField(max_length=3000, blank=True, verbose_name='cookie')
+    header = models.TextField(max_length=3000, blank=True, verbose_name='header')
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     update_time = models.DateTimeField(auto_now_add=True, verbose_name='更新时间')
     version = models.CharField(max_length=10, blank=True, verbose_name='接口版本')
+    ip = models.CharField(max_length=10, blank=True,default='localhost', verbose_name='服务器ip')
+    port = models.IntegerField(blank=True, default=4444, verbose_name='接口版本')
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'entity_script'
         verbose_name = '脚本'
+
+
+class History(models.Model):
+    create_time = models.DateTimeField(auto_now_add=True,verbose_name='创建时间')
+    script = models.ForeignKey(Script,on_delete=models.CASCADE)
+    md5 = models.CharField(max_length=64,verbose_name='文件md5')
+    status = models.CharField(max_length=20,verbose_name='执行结果')
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'entity_history'
+        verbose_name='历史记录'
