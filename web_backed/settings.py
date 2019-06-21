@@ -12,9 +12,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import djcelery
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 APP_PATH = os.path.join(BASE_DIR, 'apps')
@@ -33,19 +30,6 @@ SECRET_KEY = 'dpr4zyyt1v=r-t^mv%-n-2%u5xo4zb63gcpw!hwqtiuf9cg=5d'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
-import djcelery
-djcelery.setup_loader()
-
-BROKER_URL = 'redis://127.0.0.1:6379/3'
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/3'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
-CELERY_TIMEZONE = 'Asia/Shanghai'
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -57,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'channels',
-    'djcelery',
     'rest_framework',
     'django_filters',
     'users',
@@ -129,8 +112,6 @@ CHANNEL_LAYERS = {
         },
     },
 }
-
-djcelery.setup_loader()
 
 
 
