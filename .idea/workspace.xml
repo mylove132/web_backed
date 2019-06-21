@@ -1,30 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f53ad155-1644-42b8-a9f8-e84dfdc2c76f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/uwsgi.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/business/tasks.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/corsheaders/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/corsheaders/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/corsheaders/checks.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/corsheaders/checks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/corsheaders/compat.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/corsheaders/conf.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/corsheaders/conf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/corsheaders/middleware.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/corsheaders/middleware.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/corsheaders/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/corsheaders/signals.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/corsheaders/signals.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/django_cors_headers-2.1.0.dist-info/DESCRIPTION.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/django_cors_headers-2.1.0.dist-info/INSTALLER" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/django_cors_headers-2.1.0.dist-info/METADATA" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/django_cors_headers-2.1.0.dist-info/RECORD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/django_cors_headers-2.1.0.dist-info/WHEEL" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/django_cors_headers-2.1.0.dist-info/metadata.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/django_cors_headers-2.1.0.dist-info/top_level.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_backed/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_backed/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_backed/celery.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web_backed/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/web_backed/settings.py" afterDir="false" />
-    </list>
+    <list default="true" id="f53ad155-1644-42b8-a9f8-e84dfdc2c76f" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -127,7 +104,7 @@
       <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/requirements.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
+            <state relative-caret-position="21">
               <caret line="9" column="14" lean-forward="true" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
             </state>
           </provider>
@@ -482,8 +459,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="980" y="-746" width="1572" height="861" extended-state="0" />
-    <editor active="true" />
+    <frame x="1015" y="-784" width="1572" height="592" extended-state="0" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32913166" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5009276" side_tool="true" weight="0.40428573" />
@@ -491,8 +467,8 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32906976" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32898173" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49907234" weight="0.3968958" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49928468" visible="true" weight="0.5628272" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20522876" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.49928468" visible="true" weight="0.86868685" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20522876" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" weight="0.14755295" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -885,7 +861,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
+        <state relative-caret-position="21">
           <caret line="9" column="14" lean-forward="true" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
         </state>
       </provider>
