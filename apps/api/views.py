@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
+import os
 import subprocess
 
+from channels.http import AsgiRequest
 from django.http import FileResponse, HttpResponse, StreamingHttpResponse
 from rest_framework.views import APIView
 from users.permissions import *
@@ -151,6 +154,8 @@ class ReportView(APIView):
     def get(self, request):
         md5 = request._request.GET.get('md5')
         script_name = request._request.GET.get('script_name')
+        if script_name.find(' ') != -1:
+            script_name = script_name.replace(' ','')
         history_id = request._request.GET.get('history_id')
         if not md5:
             self.response['code'] = 6001
@@ -223,6 +228,8 @@ class ReportLogView(APIView):
     def get(self, request):
         md5 = request._request.GET.get('md5')
         script_name = request._request.GET.get('script_name')
+        if script_name.find(' ') != -1:
+            script_name = script_name.replace(' ','')
         history_id = request._request.GET.get('history_id')
         if not md5:
             self.response['code'] = 6001
@@ -261,11 +268,14 @@ class ReportLogView(APIView):
 
 class RunScript(APIView):
     response = {}
-    permission_classes = [VipPermission, ]
+    permission_classes = []
+    authentication_classes = []
 
     def post(self, request):
-        user = request.data.get('user')
-        pk = request.data.get('id')
+        user = request._request.POST.get('user')
+        pk = request._request.POST.get('id')
+        print("请求用户：{}".format(user))
+        print("请求id：{}".format(pk))
         data = Script.objects.filter(pk=pk).first()
         from api.util.redis_cli import exec_file_redis
         if exec_file_redis.exists('exec_jmx_index'):
@@ -273,6 +283,7 @@ class RunScript(APIView):
                 self.response['code'] = 5001
                 self.response['msg'] = '目前执行数已达最多，请稍后再试'
                 self.response['data'] = ''
+                print(self.response)
                 return Response(self.response)
             else:
                 exec_file_redis.set('exec_jmx_index', str(int(exec_file_redis.get('exec_jmx_index')) + 1))
@@ -303,6 +314,12 @@ class RunScript(APIView):
         pre_number = data.pre_number
         # 请求的接口名称
         name = data.name
+        print(name)
+        if name.find(' ') != -1:
+            name = name.replace(' ','')
+        if name.find(' ') != -1:
+            name = name.replace(' ','')
+        print(name)
         type_dict = {1: "GET", 2: "POST", 3: "DELETE"}
         # 获取请求方式
         request_type = type_dict[data.request_type]
@@ -351,6 +368,8 @@ class RunScript(APIView):
         # 是否监控服务器
         if ip != 'localhost' and ip != None and ip != '':
             isIp = True
+
+        print("协议id:{}".format(data.protocol))
         dubbo_f_path = constant.JMX_PATH + name + '_' + filename + ".jmx";
         if data.protocol == 1:
             # 创建http协议的jmx文件
@@ -361,6 +380,7 @@ class RunScript(APIView):
                                  header=header, assert_text=assert_text, isIp=isIp, ip=ip, port=port)
 
         elif data.protocol == 2:
+            print("dubbo")
             create_dubbo_jmx_file(dubbo_f_path, ins=ins, method=method,
                                   param_type=param_type, pre_time=pre_time, pre_num=pre_number, zkAddress=zkAddress,
                                   version=version, interface_name=name, time_out=time_out, assert_text=assert_text,
@@ -371,6 +391,7 @@ class RunScript(APIView):
                                                    dubbo_f_path,
                                                    constant.JTL_PATH + name + '_' + filename + ".jtl",
                                                    constant.JMETER_LOG + name + '_' + filename + ".log")
+            print(cmd)
             with subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE) as p:
                 while p.poll() is None:
                     out = p.stdout.readline()
@@ -562,6 +583,8 @@ class DownloadReportView(APIView):
         response = {}
         md5 = request._request.GET.get('md5')
         script_name = request._request.GET.get('script_name')
+        if script_name.find(' ') != -1:
+            script_name = script_name.replace(' ','')
         history_id = request._request.GET.get('history_id')
         print(md5)
         print(script_name)
